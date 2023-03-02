@@ -15,6 +15,7 @@
                                 <th>User Name</th>
                                 <th>Email</th>
                                 <th>Deparment</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -26,6 +27,9 @@
                                     @foreach($user->departments as $department)
                                     {{ $department->name }}
                                     @endforeach
+                                </td>
+                                <td>
+                                    <a href="{{ route('qrcode',$user->id) }}" class="btn btn-success btn-sm">QR Code</a>
                                 </td>
                             </tr>
                             @endforeach
