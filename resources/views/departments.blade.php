@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
+            {{ __('Departments') }}
         </h2>
     </x-slot>
 
@@ -12,30 +12,23 @@
                     <table class="table table-hover table-stripped table-bordered">
                         <thead>
                             <tr>
-                                <th>User Name</th>
-                                <th>Email</th>
-                                <th>Deparment</th>
+                                <th>Name</th>
+                                <th>Total User</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($users as $user)
+                            @foreach($departments as $depart)
                             <tr>
-                                <td>{{ $user->name}}</td>
-                                <td>{{ $user->email}}</td>
+                                <td>{{ $depart->name}}</td>
+                                <td>{{ $depart->users_count}}</td>
                                 <td>
-                                    @foreach($user->departments as $department)
-                                    {{ $department->name }}
-                                    @endforeach
-                                </td>
-                                <td>
-                                    <a href="{{ route('qrcode',['user'=>$user->id,'type'=>'user']) }}" class="btn btn-success btn-sm">QR Code</a>
+                                    <a href="{{ route('qrcode',['user'=>$depart->id,'type'=>'department']) }}" class="btn btn-success btn-sm">QR Code</a>
                                 </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{ $users->render()}}
                 </div>
             </div>
         </div>

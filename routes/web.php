@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\QrCodeController;
 use App\Models\Department;
@@ -34,13 +35,15 @@ Route::get('scanner',function(){
 });
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->middleware('verified')->name('dashboard');
-    Route::get('/qrcode/{user}', [QrCodeController::class,'index'])->name('qrcode');
+    Route::get('/qrcode/{user}/{type}', [QrCodeController::class,'index'])->name('qrcode');
 
     Route::resource('attendance',AttendanceController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/department',[DepartmentController::class,'index'])->name('departments');
 });
 
 require __DIR__.'/auth.php';
