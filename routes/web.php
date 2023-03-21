@@ -32,7 +32,8 @@ Route::get('/test',function(){
 
 Route::get('scanner',function(){
     return view('qrscanner');
-});
+})->name('scanner');
+
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->middleware('verified')->name('dashboard');
     Route::get('/qrcode/{user}/{type}', [QrCodeController::class,'index'])->name('qrcode');

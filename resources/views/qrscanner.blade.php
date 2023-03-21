@@ -11,7 +11,10 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <video id="preview"></video>
             <script type="text/javascript">
-                let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+            navigator.mediaDevices.getUserMedia({ video: true })
+            .then(function(stream) {
+                // Stream obtained successfully, you can now use it
+                 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
                 scanner.addListener('scan', function (content) {
                     console.log('#content',content);
                     let qr_code = content.toString();
@@ -48,6 +51,12 @@
                 }).catch(function (e) {
                     console.error(e);
                 });
+            })
+            .catch(function(error) {
+                // An error occurred, handle it accordingly
+                console.error('Error accessing camera: ' + error);
+            });
+               
             </script>
             </div>
         </div>

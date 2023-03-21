@@ -22,6 +22,12 @@
                         {{ __('Department') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('scanner')" :active="request()->routeIs('scanner')">
+                        {{ __('Scan/Read QR Code') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
