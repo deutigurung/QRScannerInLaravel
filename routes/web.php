@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', DashboardController::class)->middleware('verified')->name('dashboard');
     Route::get('/qrcode/{user}/{type}', [QrCodeController::class,'index'])->name('qrcode');
 
+    Route::get('/my-qrcode', [QrCodeController::class,'myQrCode'])->name('my-qrcode');
+
     Route::resource('attendance',AttendanceController::class);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

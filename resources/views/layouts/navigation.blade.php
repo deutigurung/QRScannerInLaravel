@@ -28,6 +28,12 @@
                         {{ __('Scan/Read QR Code') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('my-qrcode')" :active="request()->routeIs('my-qrcode')">
+                        {{ __('My QR Code') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->
@@ -94,6 +100,14 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('scanner')">
+                    {{ __('Scan QR Code') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('my-qrcode')">
+                    {{ __('My QR Code') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

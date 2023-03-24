@@ -11,51 +11,56 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <video id="preview"></video>
             <script type="text/javascript">
-            navigator.mediaDevices.getUserMedia({ video: true })
-            .then(function(stream) {
-                // Stream obtained successfully, you can now use it
-                 let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
-                scanner.addListener('scan', function (content) {
-                    console.log('#content',content);
-                    let qr_code = content.toString();
-                    $.ajax({
-                        type:"POST",
-                        url: "{{ route('attendance.store')}}",
-                        data: {
-                            "_token": "{{ csrf_token() }}",
-                            code: qr_code
-                        },
-                        success:function(response){
-                            if(response == 200){
-                                alert('Attendance added');
+                // Check if the browser supports getUserMedia
+                if (navigator.mediaDevices.getUserMedia) {
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function(stream) {
+                        // Stream obtained successfully, you can now use it
+                        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+                        scanner.addListener('scan', function (content) {
+                            console.log('#content',content);
+                            let qr_code = content.toString();
+                            $.ajax({
+                                type:"POST",
+                                url: "{{ route('attendance.store')}}",
+                                data: {
+                                    "_token": "{{ csrf_token() }}",
+                                    code: qr_code
+                                },
+                                success:function(response){
+                                    if(response == 200){
+                                        alert('Attendance added');
+                                    }
+                                    if(response == 500){
+                                        alert('Attendance already done');
+                                    }
+                                    if(response == 404){
+                                        alert('User doesnot exits');
+                                    }
+                                    console.log('@response',response);
+                                },
+                                error:function(error){
+                                    console.log(error);
+                                }
+                            })
+                        });
+                        Instascan.Camera.getCameras().then(function (cameras) {
+                            if (cameras.length > 0) {
+                            scanner.start(cameras[0]);
+                            } else {
+                            console.error('No cameras found.');
                             }
-                            if(response == 500){
-                                alert('Attendance already done');
-                            }
-                            if(response == 404){
-                                alert('User doesnot exits');
-                            }
-                            console.log('@response',response);
-                        },
-                        error:function(error){
-                            console.log(error);
-                        }
+                        }).catch(function (e) {
+                            console.error(e);
+                        });
                     })
-                });
-                Instascan.Camera.getCameras().then(function (cameras) {
-                    if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
-                    } else {
-                    console.error('No cameras found.');
-                    }
-                }).catch(function (e) {
-                    console.error(e);
-                });
-            })
-            .catch(function(error) {
-                // An error occurred, handle it accordingly
-                console.error('Error accessing camera: ' + error);
-            });
+                    .catch(function(error) {
+                        // An error occurred, handle it accordingly
+                        console.error('Error accessing camera: ' + error);
+                    });
+                }else{
+                    console.alert('getUserMedia is not supported in this browser.');
+                }
                
             </script>
             </div>

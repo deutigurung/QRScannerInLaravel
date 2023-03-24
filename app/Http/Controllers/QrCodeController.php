@@ -8,6 +8,11 @@ use Illuminate\Http\Request;
 
 class QrCodeController extends Controller
 {
+    public function myQrCode()
+    {
+        $check_user = User::find(auth()->id());
+        return view('qrcode',compact('check_user'));
+    }
     public function index($userId,$type)
     {
         if($type == 'department'){
