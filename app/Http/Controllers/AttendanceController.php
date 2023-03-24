@@ -37,7 +37,7 @@ class AttendanceController extends Controller
             return response(404);
         }
         $attendance = Attendance::where('user_id',$check_qrcode->id)->where('entry_date',$today)->first();
-        if($attendance->check_in != null && $attendance->check_out == null){
+        if($attendance != null && $attendance->check_in != null && $attendance->check_out == null){
            return $this->updateAttendance($attendance);
         }
         if($attendance){
